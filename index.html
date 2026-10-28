@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="自己紹介ページ">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>自己紹介</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2430;
+      --muted: #6b7280;
+      --accent: #3b82f6;
+      --accent-soft: #e8f0fe;
+      --border: #e5e7eb;
+      --shadow: 0 2px 10px rgba(31, 36, 48, 0.06);
+      --radius: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111318;
+        --card: #1b1e26;
+        --text: #eef0f4;
+        --muted: #a0a6b3;
+        --accent: #7aa7ff;
+        --accent-soft: #1f2a44;
+        --border: #2b2f3a;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans",
+        "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text);
+      background: var(--bg);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right)
+        env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    /* ヘッダー（プロフィール） */
+    .hero {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+
+    .avatar {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: 1.75rem;
+      margin: 0 0 4px;
+      line-height: 1.3;
+    }
+
+    .hero .role {
+      color: var(--muted);
+      margin: 0 0 16px;
+      font-size: 0.95rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* セクションカード */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin: 0 0 12px;
+      padding-left: 12px;
+      border-left: 4px solid var(--accent);
+      line-height: 1.4;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 基本情報 */
+    .info {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 16px;
+    }
+
+    .info dt {
+      color: var(--muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .info dd {
+      margin: 0;
+      word-break: break-word;
+    }
+
+    /* 趣味・スキル */
+    .list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .list li:first-child {
+      padding-top: 0;
+    }
+
+    .list .icon {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .list strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .list span.desc {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* 経歴 */
+    .timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 16px 24px;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline li::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 22px;
+      bottom: -4px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li:last-child::after {
+      display: none;
+    }
+
+    .timeline time {
+      display: block;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* 連絡先ボタン（指で押しやすい高さ） */
+    .links {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn.secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .btn:active {
+      opacity: 0.75;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 32px;
+    }
+
+    /* タブレット以上では少し余裕を持たせる */
+    @media (min-width: 600px) {
+      .container {
+        padding: 40px 24px 64px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .links {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="avatar" aria-hidden="true">H</div>
+      <h1>ひろすけ</h1>
+      <p class="role">Webエンジニア / AIと一緒にものづくり</p>
+      <ul class="tags" aria-label="キーワード">
+        <li>#Web開発</li>
+        <li>#AI</li>
+        <li>#ものづくり</li>
+      </ul>
+    </header>
+
+    <section class="card" aria-labelledby="about">
+      <h2 id="about">はじめまして</h2>
+      <p>
+        このページを見てくださり、ありがとうございます。
+        AIを活用したWeb制作に興味があり、日々いろいろなものを作って学んでいます。
+      </p>
+      <p>
+        このページは、AIと一緒に作った最初のWebページです。
+        まずはシンプルに、スマホでも読みやすいことを大切にしました。
+      </p>
+    </section>
+
+    <section class="card" aria-labelledby="profile">
+      <h2 id="profile">基本情報</h2>
+      <dl class="info">
+        <dt>名前</dt>
+        <dd>ひろすけ</dd>
+        <dt>住んでいる所</dt>
+        <dd>日本</dd>
+        <dt>仕事</dt>
+        <dd>Webエンジニア</dd>
+        <dt>好きな言葉</dt>
+        <dd>まずやってみる</dd>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="hobbies">
+      <h2 id="hobbies">趣味・好きなこと</h2>
+      <ul class="list">
+        <li>
+          <span class="icon" aria-hidden="true">💻</span>
+          <div>
+            <strong>プログラミング</strong>
+            <span class="desc">小さなアプリやWebページを作るのが好きです。</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">📚</span>
+          <div>
+            <strong>読書</strong>
+            <span class="desc">技術書からエッセイまで、ジャンルを問わず読みます。</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">☕</span>
+          <div>
+            <strong>カフェ巡り</strong>
+            <span class="desc">休日はコーヒーを飲みながらのんびり過ごします。</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="skills">
+      <h2 id="skills">できること</h2>
+      <ul class="list">
+        <li>
+          <span class="icon" aria-hidden="true">🌐</span>
+          <div>
+            <strong>HTML / CSS / JavaScript</strong>
+            <span class="desc">スマホ対応のWebページを作れます。</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">🤖</span>
+          <div>
+            <strong>AIツールの活用</strong>
+            <span class="desc">AIと会話しながら効率よく開発を進めます。</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="history">
+      <h2 id="history">これまで</h2>
+      <ol class="timeline">
+        <li>
+          <time>2024年</time>
+          プログラミングの勉強を始める
+        </li>
+        <li>
+          <time>2025年</time>
+          AIを使った開発に挑戦し始める
+        </li>
+        <li>
+          <time>2026年</time>
+          AIと一緒に初めてのWebページを公開
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" aria-labelledby="contact">
+      <h2 id="contact">連絡先</h2>
+      <div class="links">
+        <a class="btn" href="https://github.com/hirosuke0520" target="_blank" rel="noopener">
+          GitHub
+        </a>
+        <a class="btn secondary" href="mailto:example@example.com">
+          メールを送る
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2026 ひろすけ
+    </footer>
+  </main>
+</body>
+</html>
